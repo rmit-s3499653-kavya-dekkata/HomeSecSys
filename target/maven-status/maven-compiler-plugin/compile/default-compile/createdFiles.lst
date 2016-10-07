@@ -1,0 +1,3 @@
+org\cloud\controller\ApplicationController.class
+org\cloud\DataModel\Device.class
+org\cloud\service\DeviceStatus.class
