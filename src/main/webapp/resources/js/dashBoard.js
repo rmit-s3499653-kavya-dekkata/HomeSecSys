@@ -26,44 +26,28 @@ $(document).ready(function() {
 		success: function(data){
 			if(data !=="failure"){
 				var data = JSON.parse(data);
-				//console.log(data);
-				var deviceArray = [];
-				var messageArray = [];
+				var array = [];
 				data.forEach(function(itm, ind){
-
-					$('.list-group').append($('<li class="list-group-item">'))
-					.append($('<div class="checkbox row">'))
-					.append($('<div class="col-md-1"> <input type="checkbox" id="checkbox" /></div>'))
-					.append($('<div class="col-md-4"> <label for="checkbox" class = "deviceName"></label></div>'))
-					.append($('<div class = "col-md-6"><label for="checkbox" class = "deviceStatus"></label></div></div>'))
-					.append($('<div class="pull-right action-buttons">'))
-					.append($('<a href="#" class="trash">'))
-					.append($('<span class="glyphicon glyphicon-trash"></span></a></div></li>'));
-
-					deviceArray.push(itm.deviceName);
-					messageArray.push(itm.deviceMessage);
+					
+					$('.history').append($('<div class="historyRow row">'))
+					.append($('<div class = "col-md-2"></div>'))
+					.append($('<div class = "col-md-6 deviceName"></div>'))
+					.append($('<div class = "col-md-4 deviceStatus"></div></div>'));
+					
+					array.push(itm.deviceId);
+					
+					//var id = 	$(".deviceName").attr("id");
+					//console.log(id);
+					//$(".deviceName").find(id).text(itm.deviceId);
 
 				});
-
-
+					
 				var coll = document.getElementsByClassName("deviceName");
-				//console.log(coll.length); 
-				populate(deviceArray, coll);
-				var col = document.getElementsByClassName("deviceStatus");
-				populate(messageArray, col);
-				
-				$.ajax({
-					url: "http://localhost:8080/HomeSecSys/services/alerts",
-					success: function(data){
-						if(data !=="failure"){
-							var data = JSON.parse(data);
-							console.log(data);
-						}
-					},
-							error: function( jqXhr, textStatus, errorThrown ){
-								$('#noData').html('<p class="text-danger"><strong>Please connect to the internet</strong></p>')
-							}
-						});
+				console.log(coll.length); 
+				for(var j = 0; j < coll.length; j++) {
+				    coll[j].innerHTML = array[j];
+				    console.log(array[j]);
+				}
 			}
 			else{
 				$('#noData').html('<p class="text-danger"><strong>Please connect to the internet</strong></p>')
@@ -74,13 +58,4 @@ $(document).ready(function() {
 		}
 	});
 
-
-	
-		});
-
-function populate(arr, coll) {
-	for(var j = 0; j < coll.length; j++) {
-		coll[j].innerHTML = arr[j];
-		//console.log(arr[j]);
-	}
-}
+});
