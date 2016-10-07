@@ -16,7 +16,19 @@ public class ApplicationController {
 	@RequestMapping(value = "/dashBoard")
 	public String getData() {
 
-		String jsonData = deviceStatus.getByAttribute();
+		String jsonData = deviceStatus.HistoryData();
+		//System.out.println("data is " + jsonData);
+		if (!jsonData.isEmpty()){
+			return jsonData;
+		}else{
+			return "failure";
+		}
+	}
+	
+	@RequestMapping(value = "/alerts")
+	public String getAlerts() {
+
+		String jsonData = deviceStatus.AlertData();
 		System.out.println("data is " + jsonData);
 		if (!jsonData.isEmpty()){
 			return jsonData;
