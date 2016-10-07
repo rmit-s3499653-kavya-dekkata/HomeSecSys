@@ -55,10 +55,39 @@
 							<div class="col-md-12">
 								<div class="panel panel-primary" style="max-height: 400px;">
 									<div class="panel-heading">
-										<h3>History</h3>
+										<i class="fa fa-list" aria-hidden="true"></i> <h3>HISTORY</h3>
 									</div>
-									<ul class="list-group history" style="overflow-y: scroll; min-height: 100px;">
-								
+										<div class="panel-body">
+											<ul class="list-group">
+												
+											</ul>
+										</div>
+										<div class="panel-footer">
+											<div class="row">
+												<div class="col-md-6">
+													<h6>
+														Total Count <span class="label label-info">25</span>
+													</h6>
+												</div>
+												<div class="col-md-6">
+													<ul class="pagination pagination-sm pull-right">
+														<li class="disabled"><a href="javascript:void(0)">«</a></li>
+														<li class="active"><a href="javascript:void(0)">1
+																<span class="sr-only">(current)</span>
+														</a></li>
+														<li><a href="http://www.jquery2dotnet.com">2</a></li>
+														<li><a href="http://www.jquery2dotnet.com">3</a></li>
+														<li><a href="http://www.jquery2dotnet.com">4</a></li>
+														<li><a href="http://www.jquery2dotnet.com">5</a></li>
+														<li><a href="javascript:void(0)">»</a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+									<ul class="list-group history"
+										style="overflow-y: scroll; min-height: 100px;">
+
 									</ul>
 									<div id="noData" style="display: none; text-align: left;"></div>
 								</div>
