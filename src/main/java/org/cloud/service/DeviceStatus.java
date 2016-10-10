@@ -22,18 +22,18 @@ public class DeviceStatus {
 	public static String TABLE_NAME;
 	public static AmazonDynamoDBClient DB_CLIENT = new AmazonDynamoDBClient(CREDENTIALS_PROVIDER);
 	static DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient(new ProfileCredentialsProvider()));
-
 	static String tableName = "devices";
 
 	Gson gson = new Gson();
 	DeviceAlerts alerts = new DeviceAlerts();
-	private static ArrayList<Device> deviceList = new ArrayList<Device>();
+	private ArrayList<Device> deviceList = new ArrayList<Device>();
 
 	//Function for querying a specific attribute of the database
 	//Returns a List of user maps
 	//Selected attribute is passed in to query with value List<Map<String, AttributeValue>>
 	public String HistoryData()
-	{
+	{	
+		deviceList.clear();
 		String deviceJson = "";
 		DB_CLIENT.setRegion(REGION);
 		ScanResult result;
@@ -54,25 +54,46 @@ public class DeviceStatus {
 			String timeStamp = result.getItems().get(i).get("timeStamp").getS();
 
 			Device deviceDetails = new Device(timeStamp, deviceId, deviceName, deviceStatus,deviceMessage);
-
 			deviceList.add(deviceDetails);
 			deviceJson = gson.toJson(deviceList);
 
 		}
 
 		//Return JSON in string format 
-		return deviceJson;
+		return returnPage("1");
 
 	}
 
 
-	public String AlertData(){
+	private String returnPage(String pageNo) {
+		String pageJson = "";
+		Gson gson = new Gson();
 		
+		
+		if(pageNo.equalsIgnoreCase("last")) {
+			double pge = deviceList.size()/7.0;
+			int page = (int) Math.ceil(pge);
+			System.out.println(pge + " " + page);
+			ArrayList<Device> pageSpeeds = new ArrayList<Device>(deviceList.subList(((page*7) - 7) , deviceList.size()));
+			pageJson = gson.toJson(pageSpeeds);			
+			return pageJson+":::"+page+":::"+deviceList.size();
+		} else {
+			double pge = Double.parseDouble(pageNo)*7;
+			int page = (int) Math.floor(pge);
+			ArrayList<Device> pageSpeeds = new ArrayList<Device>(deviceList.subList(page-7, page));
+			pageJson = gson.toJson(pageSpeeds);
+			return pageJson+":::"+pageNo+":::"+deviceList.size();
+		}
+	}
+
+
+	public String AlertData(){
 		ArrayList<Device> lastestDevices = new ArrayList<Device>();
 		Collections.sort(deviceList, Device.timeComparator);
 		int i = 0;
 		
 			for(Device str: deviceList){
+				System.out.println(i);
 				if(i < 7){
 				lastestDevices.add(str);
 				i++;
@@ -80,7 +101,7 @@ public class DeviceStatus {
 		}
 		System.out.println(" size is " + lastestDevices.size());
 		String alertJson = alerts.DeviceAlert(lastestDevices);
-
+		lastestDevices.clear();
 		return alertJson;
 	}
 
