@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.cloud.DataModel.Device;
+import org.json.JSONObject;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
@@ -65,11 +66,10 @@ public class DeviceStatus {
 	}
 
 
-	private String returnPage(String pageNo) {
+	public String returnPage(String pageNo) {
 		String pageJson = "";
 		Gson gson = new Gson();
-		
-		
+	
 		if(pageNo.equalsIgnoreCase("last")) {
 			double pge = deviceList.size()/7.0;
 			int page = (int) Math.ceil(pge);
