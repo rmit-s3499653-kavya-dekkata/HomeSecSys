@@ -37,4 +37,9 @@ public class ApplicationController {
 			return "failure";
 		}
 	}
+	
+	@RequestMapping(value = "/historyPagination")
+	public String getPages() {
+		
+	}
 }
