@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	overflow: hidden;
+	overflow: auto;
 	height: 100%;
 	font-family: Oxygen;
 	background-color: #ccc;
@@ -93,4 +93,16 @@ a.btn.btn-primary>h3 {
 .fa-2x {
     font-size: 2em;
     color: yellow;
+}
+
+.list-group-item {
+	padding: 0;
+}
+
+ul.pagination.pagination-sm.pull-right.myPagination {
+	margin: 0;
+}
+
+h3 {
+	margin-top: 10px;
 }

@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApplicationController {
 
 	DeviceStatus deviceStatus = new DeviceStatus();
-
+	
+	
 	@RequestMapping(value = "/dashBoard")
 	public String getData() {
 

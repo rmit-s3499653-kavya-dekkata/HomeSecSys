@@ -9,10 +9,10 @@ import com.google.gson.Gson;
 public class DeviceAlerts {
 
 	Gson gson = new Gson();
-
+	static ArrayList<Device> alertList = new ArrayList<Device>();
 	public String DeviceAlert(ArrayList<Device> deviceList){
 
-		ArrayList<Device> alertList = new ArrayList<Device>();
+		
 		String alertJson = "";
 
 		for(Device device: deviceList){
@@ -27,7 +27,7 @@ public class DeviceAlerts {
 		return alertJson;
 	}
 
-	public Device computeAlert(String name, String status, String message){
+	public static Device computeAlert(String name, String status, String message){
 
 		
 		if((name.equalsIgnoreCase("\"door\"")) || (name.equalsIgnoreCase("\"window\""))
