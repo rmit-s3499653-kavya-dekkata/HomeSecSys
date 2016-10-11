@@ -55,7 +55,7 @@
 					<div class="panel-heading">
 						<i class="fa fa-list" aria-hidden="true"></i> <label style="font-size: 16pt;">HISTORY</label>
 					</div>
-					<div class="panel-body" style = "padding:0;">
+					<div class="panel-body" id="panel-body" style = "padding:0;">
 						<ul class="list-group" id="history-list" style="margin-bottom: 0;  overflow-y: auto;">
 							<!-- <li class="list-group-item"><a href="#">Blah</a></li>
 							<li class="list-group-item"><a href="#">Blah</a></li>
