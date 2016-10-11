@@ -1,5 +1,6 @@
 var deviceArray = [];
 var messageArray = [];
+var timeArray = [];
 var currentPage;
 var totalPages;
 var totalResults;
@@ -29,7 +30,7 @@ $(document).ready(function() {
 //	});  
 
 	$.ajax({
-		url: "http://localhost:8080/HomeSecSys/services/dashBoard",
+		url: USER_DASHBOARD,
 		success: function(data){
 			if(data !== "failure"){
 				var temp = data.split(":::");
@@ -50,24 +51,29 @@ $(document).ready(function() {
 			$('#noData').html('<p class="text-danger"><strong>Please connect to the internet</strong></p>')
 		}
 	});
-	
-	
-	
 });
 
 function loadData(data) {
 	deviceArray = [];
-	deviceStatus = [];
+	messageArray = [];
+	timeArray = [];
 	data.forEach(function(itm, ind){
-		$('.list-group').append($('<li class="list-group-item"><div class="checkbox row"><div class="col-md-1"> <input type="checkbox" id="checkbox" style="margin-left: 10px;"/></div><div class="col-md-2"> <label for="checkbox" class = "deviceName"></label></div><div class = "col-md-8"><label for="checkbox" class = "deviceStatus"></label></div><div class="col-md-1 pull-right action-buttons"><a href="#" class="trash"><span class="glyphicon glyphicon-trash"></span></a></div></div></li>'));
+		$('.list-group').append($('<li class="list-group-item"><div class="checkbox row"><div class="col-md-2"> <label for="checkbox" class = "deviceName"></label></div><div class = "col-md-8"><label for="checkbox" class = "deviceStatus"></label></div><div class="col-md-2 action-buttons"><sub class="timeStamp" style="color:#aaa;"></sub></div></div></li>'));
 		deviceArray.push(itm.deviceName);
 		messageArray.push(itm.deviceMessage);
+		timeArray.push(itm.timeStamp);
 	});
+	for(var i = 0; i < timeArray.length; i++) {
+		var time = timeArray[i].substring(0,16);
+		timeArray[i] = time;
+	}
 	var coll = document.getElementsByClassName("deviceName");
 	//console.log(coll.length); 
 	populateDivs(deviceArray, coll);
 	var col = document.getElementsByClassName("deviceStatus");
 	populateDivs(messageArray, col);
+	var colll = document.getElementsByClassName("timeStamp");
+	populateDivs(timeArray, colll);
 	paginate();
 	document.getElementById("totalSize").innerHTML = totalResults;
 }
@@ -102,7 +108,7 @@ function changePage(arg) {
 	console.log(data);
 	$.ajax({
 		type: "POST",
-		url:"services/historyPagination",
+		url:HISTORY_PAGINATION_TABLE,
 		data: data,
 		contentType: "application/json; charset=utf-8",
 		success: function( data, textStatus, jQxhr ){
@@ -156,9 +162,10 @@ function paginate() {
 }
 
 function showAlertDropdown() {
-	 var alertDropdown = document.getElementById("searchDropdown");
-		while(alertDropdown.hasChildNodes()) {
-		alertDropdown.removeChild(alertDropdown.childNodes[0]);
+	 var alertDropdown = document.getElementsByClassName("dropdown-content1");
+	while(alertDropdown[0].hasChildNodes()) {
+		console.log("deleting" + alertDropdown[0].childNodes[0]);
+		alertDropdown[0].removeChild(alertDropdown[0].childNodes[0]);
 	}
 	if(alertResults.length > 0){
 		// creating the a tags which will together form a dropdown list
@@ -173,13 +180,13 @@ function showAlertDropdown() {
 			collection[j].innerHTML = alertResults[j];
 //			console.log("Search results returned - " + alertResults[j]);
 		}
-
+		
 //		document.getElementById("searchDropdown").classList.toggle("show");
 	}
 	else {
 		$('.dropdown-content1').append($('<a class="searchRecommendations" href="#"></a>'));
 		var collection = document.getElementsByClassName("searchRecommendations");
-		collection[0].innerHTML = "No Recommendations found. Please try again."
+		collection[0].innerHTML = "No Alerts!"
 	}
 }
 
@@ -192,14 +199,33 @@ window.onclick = function(event) {
 			openDropdown.style.display = "none";
 		}
 		 if (event.target.matches('#homeBtn') || event.target.matches('#awayBtn')) {
-			 var home = document.getElementById("homeBtn");
-			 	if(home.classList.contains("active"))
-			 		home.classList.remove("active");
-			 var away = document.getElementById("awayBtn");
-			 if(away.classList.contains("active"))
-				 away.classList.remove("active");
+			 if(event.target.matches('#homeBtn')) {
+				 if(document.getElementById("awayBtn").classList.contains("active"))
+					 document.getElementById("awayBtn").classList.remove("active");
+				 document.getElementById("homeBtn").classList.add("active");
+				 mode = "HOME";
+			 }
+			 else {
+				 if(document.getElementById("homeBtn").classList.contains("active"))
+					 document.getElementById("homeBtn").classList.remove("active");
+				 document.getElementById("awayBtn").classList.add("active");
+				 mode = "AWAY";
+			 }
+//			 var home = document.getElementById("homeBtn");
+//			 if(home.classList.contains("active"))
+//			 	home.classList.remove("active");
+//			 var away = document.getElementById("awayBtn");
+//			 if(away.classList.contains("active"))
+//				 away.classList.remove("active");
 			 populateAlert(event.target.innerHTML);
 		}
+		 else {
+			 if(mode == "HOME") {
+				 document.getElementById("homeBtn").classList.add("active");
+			 } else if(mode == "away"){
+				 document.getElementById("awayBtn").classList.add("active");
+			 }
+		 }
 		
 	}else {
 		
@@ -215,7 +241,7 @@ window.onclick = function(event) {
 function populateAlert(mode){
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/HomeSecSys/services/alerts",
+        url: SERVICE_ALERTS,
         data: mode,
         contentType: "application/json; charset=utf-8",
         success: function( data, textStatus, jQxhr ){
@@ -236,7 +262,7 @@ function populateAlert(mode){
                $('#progress').attr("class", "c100 p" + health + " big orange");
 //               prog.classList.re
 //               classes[1] = "p"+health;
-               
+               alertResults = [];
                document.getElementById("alertNos").innerHTML = alerts; 
                for(var i =0; i < data.length; i++) {
             	   alertResults.push(data[i].deviceMessage);
@@ -245,6 +271,7 @@ function populateAlert(mode){
             else{
                 console.log("failure");
             }
+            
         },
         error: function( jqXhr, textStatus, errorThrown ){
             $('#noData').html('<p class="text-danger"><strong>Please make sure you are connected to the internet</strong></p>')

@@ -150,3 +150,15 @@ h3 {
 a.searchRecommendations {
 	width: 200px;
 }
+
+li.list-group-item {
+	color: black;
+	text-decoration: none;
+	display: block;
+	font-family: Oxygen;
+	 border-left: 6px solid #4CAF50;
+}
+
+li.list-group-item:hover {
+	background-color: #f1f1f1
+}

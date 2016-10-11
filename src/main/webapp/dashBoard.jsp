@@ -13,6 +13,7 @@
 <!-- Latest compiled JavaScript -->
 <script src="resources/js/dashBoard.js"></script>
 <script src="resources/js/loadData.js"></script>
+<script src="resources/js/modalProperties.js"></script>
 <script src="resources/jslib/bootstrap.min.js"></script>
 <link href='https://fonts.googleapis.com/css?family=Oxygen'
 	rel='stylesheet' type='text/css'>
@@ -148,7 +149,7 @@
 					</div>
 					<div class="panel-body" id="panel-body" style="padding: 0;">
 						<ul class="list-group" id="history-list"
-							style="margin-bottom: 0; overflow-y: auto;">
+							style="margin-bottom: 0; overflow-y: auto; overflow-x: hidden;">
 							<!-- <li class="list-group-item"><a href="#">Blah</a></li>
 							<li class="list-group-item"><a href="#">Blah</a></li>
 							<li class="list-group-item"><a href="#">Blah</a></li>
