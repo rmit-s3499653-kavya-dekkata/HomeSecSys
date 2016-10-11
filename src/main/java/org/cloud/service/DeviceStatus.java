@@ -49,10 +49,15 @@ public class DeviceStatus {
 		{
 			//System.out.println(result.getItems().get(i).get("deviceId").getS());
 			String deviceId = result.getItems().get(i).get("deviceId").getS();
-			String deviceName = result.getItems().get(i).get("deviceName").getS();
-			String deviceStatus =result.getItems().get(i).get("status").getS();
-			String deviceMessage = result.getItems().get(i).get("message").getS();
-			String timeStamp = result.getItems().get(i).get("timeStamp").getS();
+            deviceId = deviceId.replace("\"", "");
+            String deviceName = result.getItems().get(i).get("deviceName").getS();
+            deviceName = deviceName.replace("\"", "");
+            String deviceStatus =result.getItems().get(i).get("status").getS();
+            deviceStatus = deviceStatus.replace("\"", "");
+            String deviceMessage = result.getItems().get(i).get("message").getS();
+            deviceMessage = deviceMessage.replace("\"", "");
+            String timeStamp = result.getItems().get(i).get("timeStamp").getS();
+            timeStamp = timeStamp.replace("\"", "");
 
 			Device deviceDetails = new Device(timeStamp, deviceId, deviceName, deviceStatus,deviceMessage);
 			deviceList.add(deviceDetails);
@@ -87,7 +92,7 @@ public class DeviceStatus {
 	}
 
 
-	public String AlertData(){
+	public String AlertData(String userStatus){
 		ArrayList<Device> lastestDevices = new ArrayList<Device>();
 		Collections.sort(deviceList, Device.timeComparator);
 		int i = 0;
@@ -100,7 +105,7 @@ public class DeviceStatus {
 			}
 		}
 		System.out.println(" size is " + lastestDevices.size());
-		String alertJson = alerts.DeviceAlert(lastestDevices);
+		String alertJson = alerts.DeviceAlert(lastestDevices, userStatus);
 		lastestDevices.clear();
 		return alertJson;
 	}

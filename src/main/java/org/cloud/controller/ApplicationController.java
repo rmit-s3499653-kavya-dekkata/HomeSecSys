@@ -28,10 +28,10 @@ public class ApplicationController {
 		}
 	}
 	
-	@RequestMapping(value = "/alerts")
-	public String getAlerts() {
+	@RequestMapping(value = "/alerts", method = RequestMethod.POST)
+	public String getAlerts(@RequestBody String data) {
 
-		String jsonData = deviceStatus.AlertData();
+		String jsonData = deviceStatus.AlertData(data);
 		System.out.println("data is " + jsonData);
 		if (!jsonData.isEmpty()){
 			return jsonData;
