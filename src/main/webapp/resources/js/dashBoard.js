@@ -30,7 +30,7 @@ $(document).ready(function() {
 //	});  
 
 	$.ajax({
-		url: USER_DASHBOARD,
+		url: "http://hssv1.us-east-1.elasticbeanstalk.com/services/dashBoard",
 		success: function(data){
 			if(data !== "failure"){
 				var temp = data.split(":::");
@@ -108,7 +108,7 @@ function changePage(arg) {
 	console.log(data);
 	$.ajax({
 		type: "POST",
-		url:HISTORY_PAGINATION_TABLE,
+		url:"http://hssv1.us-east-1.elasticbeanstalk.com/services/historyPagination",
 		data: data,
 		contentType: "application/json; charset=utf-8",
 		success: function( data, textStatus, jQxhr ){
@@ -241,7 +241,7 @@ window.onclick = function(event) {
 function populateAlert(mode){
     $.ajax({
         type: "POST",
-        url: SERVICE_ALERTS,
+        url: "http://hssv1.us-east-1.elasticbeanstalk.com/services/alerts",
         data: mode,
         contentType: "application/json; charset=utf-8",
         success: function( data, textStatus, jQxhr ){

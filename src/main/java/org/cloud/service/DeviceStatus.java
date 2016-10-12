@@ -7,6 +7,8 @@ import org.cloud.DataModel.Device;
 import org.json.JSONObject;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
@@ -18,10 +20,10 @@ import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.google.gson.Gson;
 
 public class DeviceStatus {
-	public static final AWSCredentialsProvider CREDENTIALS_PROVIDER = new ClasspathPropertiesFileCredentialsProvider();
+	public static final BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJJ2F65SZL3N3X3NA", "euDvbbgv/eL7UsMbcjviXcNwT8y/V9kbc5xJinxW");
 	public static final Region REGION = Region.getRegion(Regions.US_EAST_1);
 	public static String TABLE_NAME;
-	public static AmazonDynamoDBClient DB_CLIENT = new AmazonDynamoDBClient(CREDENTIALS_PROVIDER);
+	public static AmazonDynamoDBClient DB_CLIENT = new AmazonDynamoDBClient(new AWSStaticCredentialsProvider(awsCreds));
 	static DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient(new ProfileCredentialsProvider()));
 	static String tableName = "devices";
 

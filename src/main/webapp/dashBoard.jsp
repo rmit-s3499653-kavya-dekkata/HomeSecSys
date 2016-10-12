@@ -12,8 +12,8 @@
 <script src="resources/jslib/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="resources/js/dashBoard.js"></script>
-<script src="resources/js/loadData.js"></script>
-<script src="resources/js/modalProperties.js"></script>
+<script src="resources/js/loadData.js"></script><!-- 
+<script src="resources/js/modalProperties.js"></script> -->
 <script src="resources/jslib/bootstrap.min.js"></script>
 <link href='https://fonts.googleapis.com/css?family=Oxygen'
 	rel='stylesheet' type='text/css'>
