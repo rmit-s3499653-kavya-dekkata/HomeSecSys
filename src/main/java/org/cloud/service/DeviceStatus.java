@@ -20,7 +20,7 @@ import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.google.gson.Gson;
 
 public class DeviceStatus {
-	public static final BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJJ2F65SZL3N3X3NA", "euDvbbgv/eL7UsMbcjviXcNwT8y/V9kbc5xJinxW");
+	public static final BasicAWSCredentials awsCreds = new BasicAWSCredentials("YOUR AWS ACCESS KEY HERE", "YOUR AWS SECRET KEY HERE");
 	public static final Region REGION = Region.getRegion(Regions.US_EAST_1);
 	public static String TABLE_NAME;
 	public static AmazonDynamoDBClient DB_CLIENT = new AmazonDynamoDBClient(new AWSStaticCredentialsProvider(awsCreds));
